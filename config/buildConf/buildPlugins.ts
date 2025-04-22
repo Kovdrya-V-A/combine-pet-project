@@ -6,7 +6,8 @@ import { BuildOptions } from "./types/config";
 export function buildPlugins({ paths }: BuildOptions): webpack.WebpackPluginInstance[] {
     return [
         new HTMLWebpuckPlugin({
-            template: paths.html
+            template: paths.html,
+            favicon: "./public/logo.svg"
         }),
         new webpack.ProgressPlugin(),
         new MiniCssExtractPlugin({
