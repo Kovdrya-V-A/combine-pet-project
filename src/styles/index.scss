@@ -1,0 +1,19 @@
+@use "variables/global" as global;
+@use "normalize";
+@use "themes/dark" as dark;
+@use "themes/light" as light;
+
+.app {
+    font: var(--font-m);
+    background: var(--bg-color);
+    color: var(--primary-color);
+    min-height: 100vh;
+    max-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .contentWrapper {
+        flex: 1;
+    }
+}

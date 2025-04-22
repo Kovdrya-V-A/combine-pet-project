@@ -1,38 +1,49 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { Suspense } from "react";
 import { AppRoutes } from "./enums/routes";
 import { MainPageLazy } from "./components/pages/MainPage/MainPage.lazy";
 import { AboutPageLazy } from "./components/pages/AboutPage/AboutPage.lazy";
-//INFO: в версии css-loader 7.0.0+ необходим именованный иморт
-import * as style from "./App.module.scss"
+import { useTheme } from "./theme/useTheme";
+import { Suspense } from "react";
+import ThemeProvider from "./theme/ThemeProvider";
+import MainLoader from "./components/loders/MainLoader/MainLoader";
+import Header from "./components/Header/Header";
+import "./styles/index.scss";
+
 
 const InnerApp = () => {
+    const { theme } = useTheme()
 
     const Layout = () => (
-        <div className={style.layout}>
-            <Outlet />
+        <div className={`app ${theme}`}>
+            <Header/>
+            <div className="contentWrapper">
+                <Suspense fallback={<MainLoader />}>
+                    <Outlet />
+                </Suspense>
+            </div>
         </div>
     );
-    return ( 
-        <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <Layout />
-                    }>
-                        <Route path="/" element={<MainPageLazy/>}/>
-                        <Route path={AppRoutes.About} element={<AboutPageLazy/>}/>
-                </Route>
-            </Routes>
-        </Suspense>
+
+    return (
+        <Routes>
+            <Route
+                path="/"
+                element={
+                    <Layout />
+                }>
+                <Route path="/" element={<MainPageLazy />} />
+                <Route path={AppRoutes.About} element={<AboutPageLazy />} />
+            </Route>
+        </Routes>
     );
 };
 
 function App() {
     return (
         <BrowserRouter>
-            <InnerApp />
+            <ThemeProvider>
+                <InnerApp />
+            </ThemeProvider>
         </BrowserRouter>
     );
 }
