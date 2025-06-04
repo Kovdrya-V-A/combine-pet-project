@@ -5,7 +5,7 @@ interface IProps {
 const MainPage = (props: IProps) => {
     return (
     <div>
-        MAIN PAGE
+        MAIN PAGE (Lasy)
     </div> 
     );
 }
